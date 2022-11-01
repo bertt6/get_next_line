@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bsamli <bsamli@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:50:30 by bsamli            #+#    #+#             */
-/*   Updated: 2022/11/01 15:51:55 by bsamli           ###   ########.fr       */
+/*   Updated: 2022/11/01 17:27:45 by bsamli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read(int fd, char *str)
 {
@@ -39,14 +39,14 @@ char	*ft_read(int fd, char *str)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*lft_str;
+	static char	*lft_str[1024];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	lft_str = ft_read(fd, lft_str);
-	if (!lft_str)
+	lft_str[fd] = ft_read(fd, lft_str[fd]);
+	if (!lft_str[fd])
 		return (0);
-	line = ft_line(lft_str);
-	lft_str = ft_clean(lft_str);
+	line = ft_line(lft_str[fd]);
+	lft_str[fd] = ft_clean(lft_str[fd]);
 	return (line);
 }
